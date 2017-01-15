@@ -1,0 +1,185 @@
+<zk>
+
+
+    <style>.z-menubar-hor, .z-menubar-ver { border: 1px solid #D8D8D8; }
+        .content {overflow-x: hidden;overflow-y: scroll;}
+    </style>
+
+
+
+    <!--<window border="normal" width="320px" title="Create new user">-->
+        <!--<div apply="org.zkoss.bind.BindComposer"-->
+             <!--viewModel="@id('vm') @init('CRUD.PagingViewModel')"-->
+             <!--form="@id('fx') @load(vm.user)-->
+		 <!--@save(vm.user, before='revertMail')	">-->
+
+            <!--<grid>-->
+                <!--<columns>-->
+                    <!--<column label="" width="120px"/>-->
+                    <!--<column label="" width="170px"/>-->
+                <!--</columns>-->
+                <!--<rows>-->
+                    <!--<row>-->
+                        <!--<label value="UserName" width="150px"/>-->
+                        <!--<hlayout>-->
+                            <!--<textbox value="@bind(fx.name)"-->
+                                     <!--width="150px" tabindex="1"/>-->
+                        <!--</hlayout>-->
+                    <!--</row>-->
+                    <!--<row>-->
+                        <!--Admin-->
+                        <!--<combobox inplace="true" value="@bind(fx.status)"-->
+                                  <!--model="@load(fx.statuses)" selectedItem="@bind(fx.status)" hflex="1" >-->
+                            <!--<template name="model">-->
+                                <!--<comboitem label="@load(each)" />-->
+                            <!--</template>-->
+                        <!--</combobox>-->
+                    <!--</row>-->
+                    <!--<row>-->
+                        <!--Age:-->
+                        <!--<cell>-->
+                            <!--<intbox value="@bind(fx.age)" width="150px" tabindex="4"/>-->
+                            <!--<label class="error"-->
+                                   <!--value=""/>-->
+                        <!--</cell>-->
+                    <!--</row>-->
+                    <!--<row>-->
+                        <!--<cell colspan="3" style="text-align:center">-->
+                            <!--<vlayout>-->
+                                <!--<label visible="@load(empty vmsgs)"-->
+                                       <!--value="@load(empty vmsgs ? 'User successfully created!' : '', before='revertMail')"/>-->
+                                <!--<button label="Create" onClick="@command('revertMail')"-->
+                                        <!--width="100px" height="30px"/>-->
+                            <!--</vlayout>-->
+                        <!--</cell>-->
+                    <!--</row>-->
+                <!--</rows>-->
+            <!--</grid>-->
+        <!--</div>-->
+    <!--</window>-->
+
+
+    <div style="padding-top:40px;" apply="org.zkoss.bind.BindComposer"
+         viewModel="@id('vm') @init('CRUD.PagingViewModel')" >
+
+        <button id="revertBtn1" width="215px" label="Update list" onClick="@command('update')"/>
+        <button id="revertBtn2" width="215px" label="removeAllUsers" onClick="@command('removeAllUsers')"/>
+        <button id="revertBtn3" width="215px" label="create10RandomUsers" onClick="@command('create10RandomUsers')"/>
+        <div style=" padding-top:20px"
+             viewModel="@id('vm') @init('CRUD.PagingViewModel')"
+             form="@id('fx') @load(vm.user)
+		 @save(vm.user, before='revertMail')	">
+
+            <grid>
+                <columns>
+                    <column label="Name" width="170px"/>
+                    <column label="Admin" width="120px"/>
+                    <column label="Age" width="70px"/>
+                    <column label="Create User" width="115px"/>
+                    <column label=" " width="215px"/>
+                </columns>
+                <rows>
+                    <row>
+                        <hlayout>
+                            <textbox value="@bind(fx.name)"
+                                     width="150px" tabindex="1"/>
+                        </hlayout>
+                        <combobox inplace="true" value="@bind(fx.status)"
+                                  model="@load(fx.statuses)" selectedItem="@bind(fx.status)" hflex="1" >
+                            <template name="model">
+                                <comboitem label="@load(each)" />
+                            </template>
+                        </combobox>
+
+                        <cell>
+                            <intbox value="@bind(fx.age)" width="50px" tabindex="4"/>
+                            <label class="error"
+                                   value=""/>
+                        </cell>
+
+                        <cell width="110px" style="text-align:center">
+                                <button style="float:left" label="Create" onClick="@command('revertMail')"
+                                        width="100px" height="30px"/>
+                        </cell>
+                        <label visible="@load(empty vmsgs)"
+                               value="@load(empty vmsgs ? 'Created! Plz update the list!' : '', before='revertMail')"
+                                                     />
+                    </row>
+                </rows>
+            </grid>
+        </div>
+        <grid model="@load(vm.foodModel)"
+              mold="paging" pageSize="6">
+
+            <auxhead sclass="category-center">
+
+                <auxheader label="List of users" colspan="6" />
+            </auxhead>
+
+            <auxhead sclass="category-center">
+                <auxheader colspan="1">
+                    <textbox instant="true" width="100px"
+                             value="@bind(vm.filter.id)" onChange="@command('changeFilter')" />
+                </auxheader>
+                <auxheader colspan="1">
+                    <textbox instant="true"  width="100px"
+                             value="@bind(vm.filter.name)" onChange="@command('changeFilter')"/>
+                </auxheader>
+                <auxheader colspan="1">
+                    <textbox instant="true" width="100px"
+                             value="@bind(vm.filter.age)" onChange="@command('changeFilter')"/>
+                </auxheader>
+                <auxheader colspan="1">
+                    <textbox instant="true" width="100px"
+                             value="@bind(vm.filter.status)" onChange="@command('changeFilter')"/>
+                </auxheader>
+                <auxheader colspan="1">
+                    <textbox instant="true" width="32px"
+                             value="@bind(vm.filter.dateDay)" onChange="@command('changeFilter')"/>
+                    <textbox instant="true" width="32px"
+                             value="@bind(vm.filter.dateMounth)" onChange="@command('changeFilter')"/>
+                    <textbox instant="true" width="32px"
+                             value="@bind(vm.filter.dateYear)" onChange="@command('changeFilter')"/>
+                </auxheader>
+            </auxhead>
+
+            <columns>
+                <column hflex="1">id</column>
+                <column hflex="1">name</column>
+                <column hflex="1">age</column>
+                <column hflex="1">admin</column>
+                <column hflex="1">timeCreared</column>
+                <column hflex="1">Delete?</column>
+            </columns>
+            <template name="model">
+                <row>
+
+
+
+                    <label value="@load(each.id)"/>
+                    <textbox inplace="true" onChange="@command('updateUser' ,usertoupdate=each)"
+                             value="@bind(each.name)" width="99%" />
+                    <intbox inplace="true" onChange="@command('updateUser' ,usertoupdate=each)"
+                             value="@bind(each.age)" width="99%" />
+
+                    <combobox inplace="true" value="@bind(each.status)" onChange="@command('updateUser' ,usertoupdate=each)"
+                              model="@load(each.statuses)" selectedItem="@bind(each.status)" hflex="1" >
+                        <template name="model">
+                            <comboitem label="@load(each)" />
+                        </template>
+                    </combobox>
+
+                    <cell colspan="1">
+                        <datebox inplace="true" format="dd/MM/yyyy" value="@load(each.timeCreared)"
+                                  width="200px"/>
+                    </cell>
+                    <button label="Delete" onClick="@command('removeMail', usertodelete=each)" />
+                </row>
+            </template>
+
+        </grid>
+    </div>
+
+
+
+</zk>
